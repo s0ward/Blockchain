@@ -22,14 +22,15 @@ public class Miner {
 
     private static Block getBlock(){
         //Returns a new Block formed by taking transactions from the transPool
+        return null;
     }
 
-    private static void sendBlock(){
+    private static void sendBlock(Block block) throws IOException {
         //sends the block to either the BlockServer or the TransactionPool
+        socketWriter.write(block.toString());
     }
-    public static void mine(){
 
-
+    public static void mine() throws IOException {
         while(true) {
 
             Block currentBlock = getBlock();
@@ -39,7 +40,8 @@ public class Miner {
                 currentBlock.setNonce(counter.toString());
                 counter++;
             }
-            sendBlock();
+
+            sendBlock(currentBlock);
         }
     }
 

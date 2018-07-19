@@ -23,4 +23,12 @@ public class Ledger {
         }
         return hash;
     }
+
+    public String toString(){
+        String result = "";
+        for(Transaction trans: transactions){
+            result += trans.toString()+"\n";
+        }
+        return result;
+    }
 }

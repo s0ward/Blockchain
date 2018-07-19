@@ -33,4 +33,14 @@ public class Block {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+            "blockNumber=" + blockNumber +
+            ", header=" + header +
+            ", headerHash='" + headerHash + '\'' +
+            ", ledger=" + ledger +
+            '}';
+    }
 }

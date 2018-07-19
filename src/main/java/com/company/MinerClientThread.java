@@ -29,9 +29,8 @@ public class MinerClientThread extends Thread {
         try {
 
             //Miner should send valid blocks over the wire
-            socketWriter.write("Hello, Miner! What do you have for me?\n");
-            socketWriter.flush();
-            String answer = socketReader.readLine();
+            //socketWriter.flush();
+            //String answer = socketReader.readLine();
 
 
 
