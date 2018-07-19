@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class BlockServer {
-    private static int LISTENING_PORT = 9000;
+    public static int LISTENING_PORT = 9000;
 
 
     public static void main(String[] args) throws IOException {
