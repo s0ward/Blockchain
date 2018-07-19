@@ -20,8 +20,4 @@ public class BlockServer {
             minerClientThread.start();
         }
     }
-
-    private boolean verifyBlock(Block block){
-        return false;
-    }
 }

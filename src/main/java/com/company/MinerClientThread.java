@@ -45,6 +45,10 @@ public class MinerClientThread extends Thread {
         }
     }
 
+    private boolean verifyBlock(Block block){
+        return false;
+    }
+
 
 
 }

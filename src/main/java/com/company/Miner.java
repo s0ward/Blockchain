@@ -2,16 +2,30 @@ package com.company;
 
 public class Miner {
 
-    private static final int DIFFICULTY = 2;
+    private TransactionPool transPool;
+    private Block currentBlock;
 
-
-    private boolean hashIsValid(String hash){
-        char[] arr = hash.toCharArray();
-
-        for(int i=0; i<DIFFICULTY; i++){
-            if(arr[i] != '0') return false;
-        }
-
-        return true;
+    private void getBlock(){
+        //currentBlock = A new Block formed by taking transactions from the transPool
     }
+
+    private void sendBlock(){
+        //sends the block to either the BlockServer or the TransactionPool
+    }
+    public void mine(){
+
+
+        while(true) {
+
+            getBlock();
+            Integer counter = 0;
+
+            while (!currentBlock.isValid()) {
+                currentBlock.setNonce(counter.toString());
+                counter++;
+            }
+            sendBlock();
+        }
+    }
+
 }

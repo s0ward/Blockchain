@@ -28,6 +28,9 @@ public class BlockHeader {
             '}';
     }
 
+    public void setNonce(String nonce){
+        this.nonce = nonce;
+    }
     public String hash() throws NoSuchAlgorithmException {
         return Hasher.hash(this.toString());
     }
