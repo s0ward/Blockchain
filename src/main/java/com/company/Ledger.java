@@ -8,11 +8,12 @@ public class Ledger {
     private Transaction[] transactions = new Transaction[LEDGER_SIZE];
     private int counter = 0;
 
-    public void addTransaction(Transaction trans) {
+    public void addTransaction(Transaction trans) throws Exception {
         if (counter < LEDGER_SIZE) {
             transactions[counter] = trans;
             counter++;
         }
+        else throw new Exception("Ledger is already full");
     }
 
     public String hash() throws NoSuchAlgorithmException {
