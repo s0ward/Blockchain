@@ -14,7 +14,7 @@ public class BlockServer {
         //System.out.println("Server started. Listening on port "+LISTENING_PORT+"...");
 
 
-        while(true){
+        while (true) {
             Socket socket = serverSocket.accept();
             MinerClientThread minerClientThread = new MinerClientThread(socket);
             minerClientThread.start();
