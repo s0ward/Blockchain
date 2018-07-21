@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class Node {
 
-    private final static int LISTENING_PORT = 9001;
-    private final static int MAX_NEIGHBORS = 3;
+    private static final int LISTENING_PORT = 9001;
+    private static final int MAX_NEIGHBORS = 3;
     private String inetaddr;
     private ArrayList<String> neighbors = new ArrayList<>(MAX_NEIGHBORS);
     private ServerSocket serverSocket;
@@ -18,6 +19,17 @@ public class Node {
     public Node() throws Exception {
         this.inetaddr = getIp();
         serverSocket = new ServerSocket(LISTENING_PORT);
+    }
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(LISTENING_PORT);
+
+        while (true) {
+            Socket socket = serverSocket.accept();
+            NodeClientThread nodeClientThread = new NodeClientThread(socket);
+            nodeClientThread.start();
+        }
+
     }
 
     private static String getIp() throws Exception {
@@ -39,7 +51,7 @@ public class Node {
         }
     }
 
-    public String getInetaddr() {
+    public String getInetAddr() {
         return inetaddr;
     }
 }

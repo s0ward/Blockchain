@@ -13,7 +13,7 @@ public class Ledger implements Serializable {
     private int counter = 0;
 
     public void addTransaction(Transaction trans) {
-        if(transactions.size() < 100) this.transactions.add(trans);
+        if (transactions.size() < 100) this.transactions.add(trans);
     }
 
     public String hash() throws NoSuchAlgorithmException {

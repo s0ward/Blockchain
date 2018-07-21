@@ -1,23 +1,21 @@
-package com.company;
+package com.company.network.p2p;
 
 import java.io.*;
 import java.net.Socket;
 
-public class MinerClientThread extends Thread {
+public class NodeClientThread extends Thread {
 
     private int CLIENT_REQUEST_TIMEOUT = 15 * 60 * 1000;
     private Socket sock = null;
     private BufferedReader socketReader = null;
     private BufferedWriter socketWriter = null;
-    private ObjectInputStream ois = null;
 
 
-    MinerClientThread(Socket sock) throws IOException {
+    NodeClientThread(Socket sock) throws IOException {
         this.sock = sock;
         sock.setSoTimeout(CLIENT_REQUEST_TIMEOUT);
         socketReader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         socketWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-        ois = new ObjectInputStream(sock.getInputStream());
     }
 
     public void run() {
@@ -29,25 +27,15 @@ public class MinerClientThread extends Thread {
 
         try {
 
-            //Miner should send valid blocks over the wire
+            //Nodes are able to communicate following a protocol
+            //TO DO: Implement a reasonable protocol
 
             while (!isInterrupted()) {
-
-                Block block = null;
-                try {
-
-                    block = (Block) ois.readObject();
-                    System.out.println(block);
-
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
+                String message = socketReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }
+

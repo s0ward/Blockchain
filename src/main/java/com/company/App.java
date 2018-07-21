@@ -2,8 +2,6 @@ package com.company;
 
 import com.company.network.p2p.Node;
 
-import java.security.NoSuchAlgorithmException;
-
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -23,7 +21,7 @@ public class App {
 //        Block block2 = new Block();
 //        Block block3 = new Block();
         Node node = new Node();
-        System.out.println(node.getInetaddr());
+        System.out.println(node.getInetAddr());
 
 
     }
