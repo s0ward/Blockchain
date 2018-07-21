@@ -8,17 +8,12 @@ import java.util.List;
 public class Ledger implements Serializable {
 
     private static final int LEDGER_SIZE = 100;
-    //    private Transaction[] transactions = new Transaction[LEDGER_SIZE];
+
     private List<Transaction> transactions = new ArrayList<>();
     private int counter = 0;
 
-    public void addTransaction(Transaction trans) throws Exception {
-//        if (counter < LEDGER_SIZE) {
-//            transactions[counter] = trans;
-//            counter++;
-//        }
-//        else throw new Exception("Ledger is already full");
-        this.transactions.add(trans);
+    public void addTransaction(Transaction trans) {
+        if(transactions.size() < 100) this.transactions.add(trans);
     }
 
     public String hash() throws NoSuchAlgorithmException {

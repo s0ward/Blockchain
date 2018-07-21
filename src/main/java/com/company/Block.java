@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Block implements Serializable {
 
-    private static final int DIFFICULTY = 2;
+    private static final int DIFFICULTY = 6;
     private static int blockCounter = 0;
     private int blockNumber = 0;
     private BlockHeader header;
