@@ -15,9 +15,9 @@ public class Hasher {
     }
 
     private static String bytesToHex(byte[] hash) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
+        StringBuilder hexString = new StringBuilder();
+        for (byte aHash : hash) {
+            String hex = Integer.toHexString(0xff & aHash);
             if (hex.length() == 1) {
                 hexString.append('0');
             }

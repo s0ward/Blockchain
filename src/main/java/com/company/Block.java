@@ -39,7 +39,11 @@ public class Block implements Serializable {
 
         char[] arr = headerHash.toCharArray();
 
-        for (int i = 0; i < DIFFICULTY; i++) if (arr[i] != '0') return false;
+        for (int i = 0; i < DIFFICULTY; i++) {
+            if (arr[i] != '0') {
+                return false;
+            }
+        }
 
         return true;
     }

@@ -22,7 +22,6 @@ public class Miner {
 
     private static Block getBlock() throws Exception {
         //Returns a new Block formed by taking transactions from the transPool
-        //return null;
         Ledger ledger = new Ledger();
         ledger.addTransaction(new Transaction(1, "me", "you", 10));
         return new Block("prevHashEXAMPLE", "nonceEXAMPLE", new Ledger());

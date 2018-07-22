@@ -13,7 +13,9 @@ public class Ledger implements Serializable {
     private int counter = 0;
 
     public void addTransaction(Transaction trans) {
-        if (transactions.size() < 100) this.transactions.add(trans);
+        if (transactions.size() < LEDGER_SIZE) {
+            this.transactions.add(trans);
+        }
     }
 
     public String hash() throws NoSuchAlgorithmException {
@@ -25,10 +27,10 @@ public class Ledger implements Serializable {
     }
 
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Transaction trans : transactions) {
-            result += trans.toString() + "\n";
+            result.append(trans.toString()).append("\n");
         }
-        return result;
+        return result.toString();
     }
 }

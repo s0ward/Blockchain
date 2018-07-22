@@ -18,8 +18,8 @@ public class Node {
 
     public static void main(String[] args) throws IOException {
 
-            NodeServerThread nodeServerThread = new NodeServerThread();
-            nodeServerThread.start();
+        NodeServerThread nodeServerThread = new NodeServerThread();
+        nodeServerThread.start();
 
     }
 
@@ -42,7 +42,7 @@ public class Node {
         }
     }
 
-    private void sendMessage(String host, String message){
+    private void sendMessage(String host, String message) {
         Socket socket = null;
         try {
             socket = new Socket(host, LISTENING_PORT);

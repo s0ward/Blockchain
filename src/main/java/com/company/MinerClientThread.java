@@ -20,6 +20,7 @@ public class MinerClientThread extends Thread {
         ois = new ObjectInputStream(sock.getInputStream());
     }
 
+    @Override
     public void run() {
 
 //        System.out.println(new Date().toString() + " : " +
