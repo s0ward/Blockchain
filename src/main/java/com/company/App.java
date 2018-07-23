@@ -1,10 +1,10 @@
 package com.company;
 
-import java.security.NoSuchAlgorithmException;
+import com.company.network.p2p.Node;
 
 public class App {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws Exception {
 
 //
 //                Transaction trans1 = new Transaction(1,"me","you", 123);
@@ -20,6 +20,9 @@ public class App {
 //        Block block1 = new Block();
 //        Block block2 = new Block();
 //        Block block3 = new Block();
+        Node node = new Node();
+        System.out.println(node.getInetAddr());
+
 
     }
 }

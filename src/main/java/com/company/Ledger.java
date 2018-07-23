@@ -1,19 +1,21 @@
 package com.company;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Ledger {
+public class Ledger implements Serializable {
 
     private static final int LEDGER_SIZE = 100;
-    private Transaction[] transactions = new Transaction[LEDGER_SIZE];
+
+    private List<Transaction> transactions = new ArrayList<>();
     private int counter = 0;
 
-    public void addTransaction(Transaction trans) throws Exception {
-        if (counter < LEDGER_SIZE) {
-            transactions[counter] = trans;
-            counter++;
+    public void addTransaction(Transaction trans) {
+        if (transactions.size() < LEDGER_SIZE) {
+            this.transactions.add(trans);
         }
-        else throw new Exception("Ledger is already full");
     }
 
     public String hash() throws NoSuchAlgorithmException {
@@ -22,5 +24,13 @@ public class Ledger {
             hash = Hasher.hash(hash + t.hash());
         }
         return hash;
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Transaction trans : transactions) {
+            result.append(trans.toString()).append("\n");
+        }
+        return result.toString();
     }
 }

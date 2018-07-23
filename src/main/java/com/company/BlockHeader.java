@@ -1,9 +1,10 @@
 package com.company;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
-public class BlockHeader {
+public class BlockHeader implements Serializable {
 
     private String prevHash;
     private Date timestamp;
@@ -26,6 +27,10 @@ public class BlockHeader {
             ", nonce='" + nonce + '\'' +
             ", ledgerHash='" + ledgerHash + '\'' +
             '}';
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
     }
 
     public String hash() throws NoSuchAlgorithmException {
