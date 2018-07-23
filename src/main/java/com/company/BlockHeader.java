@@ -2,12 +2,13 @@ package com.company;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BlockHeader implements Serializable {
 
     private String prevHash;
-    private Date timestamp;
+    private String timestamp;
     private String nonce;
     private String ledgerHash;
 
@@ -15,18 +16,19 @@ public class BlockHeader implements Serializable {
         this.prevHash = prevHash;
         this.nonce = nonce;
         this.ledgerHash = ledgerHash;
-        this.timestamp = new Date();
+        this.timestamp = new SimpleDateFormat("HH:mm:ss/dd.MM.yyyy").format(new Date());
+    }
+
+    public BlockHeader(String prevHash, String nonce, String ledgerHash, String timestamp) {
+        this.prevHash = prevHash;
+        this.nonce = nonce;
+        this.ledgerHash = ledgerHash;
+        this.timestamp = timestamp;
     }
 
     @Override
     public String toString() {
-
-        return "BlockHeader{" +
-            "prevHash='" + prevHash + '\'' +
-            ", timestamp=" + timestamp +
-            ", nonce='" + nonce + '\'' +
-            ", ledgerHash='" + ledgerHash + '\'' +
-            '}';
+        return prevHash + " " + timestamp + " " + nonce + " " + ledgerHash;
     }
 
     public void setNonce(String nonce) {

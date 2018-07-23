@@ -13,7 +13,7 @@ public class MiningNode extends Node {
     private static ObjectOutputStream oos;
     private TransactionPool transPool;
 
-    public MiningNode() {
+    public MiningNode() throws IOException {
         super();
     }
 

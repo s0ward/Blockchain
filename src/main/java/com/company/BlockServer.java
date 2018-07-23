@@ -16,7 +16,7 @@ public class BlockServer {
 
         while (true) {
             Socket socket = serverSocket.accept();
-            MinerClientThread minerClientThread = new MinerClientThread(socket);
+            BlockServerClientThread minerClientThread = new BlockServerClientThread(socket);
             minerClientThread.start();
         }
     }

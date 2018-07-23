@@ -50,11 +50,6 @@ public class Block implements Serializable {
 
     @Override
     public String toString() {
-        return "Block{" +
-            "blockNumber=" + blockNumber +
-            ", header=" + header +
-            ", headerHash='" + headerHash + '\'' +
-            ", ledger=" + ledger +
-            '}';
+        return blockNumber + " " + header + " " + headerHash + " " + ledger;
     }
 }

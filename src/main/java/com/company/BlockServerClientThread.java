@@ -3,7 +3,7 @@ package com.company;
 import java.io.*;
 import java.net.Socket;
 
-public class MinerClientThread extends Thread {
+public class BlockServerClientThread extends Thread {
 
     private int CLIENT_REQUEST_TIMEOUT = 15 * 60 * 1000;
     private Socket sock = null;
@@ -12,7 +12,7 @@ public class MinerClientThread extends Thread {
     private ObjectInputStream ois = null;
 
 
-    MinerClientThread(Socket sock) throws IOException {
+    BlockServerClientThread(Socket sock) throws IOException {
         this.sock = sock;
         sock.setSoTimeout(CLIENT_REQUEST_TIMEOUT);
         socketReader = new BufferedReader(new InputStreamReader(sock.getInputStream()));

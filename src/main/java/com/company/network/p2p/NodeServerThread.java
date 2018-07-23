@@ -7,6 +7,11 @@ import java.net.Socket;
 public class NodeServerThread extends Thread {
 
     private static final int LISTENING_PORT = 9001;
+    private Node node;
+
+    public NodeServerThread(Node node) {
+        this.node = node;
+    }
 
     @Override
     public void run() {
@@ -21,7 +26,7 @@ public class NodeServerThread extends Thread {
 
             while (!isInterrupted()) {
                 Socket socket = serverSocket.accept();
-                NodeClientThread nodeClientThread = new NodeClientThread(socket);
+                NodeClientThread nodeClientThread = new NodeClientThread(node, socket);
                 nodeClientThread.start();
             }
         } catch (IOException e) {

@@ -36,7 +36,7 @@ public class Node {
 
     private void startServer() throws IOException {
 
-        NodeServerThread nodeServerThread = new NodeServerThread();
+        NodeServerThread nodeServerThread = new NodeServerThread(this);
         nodeServerThread.start();
 
     }

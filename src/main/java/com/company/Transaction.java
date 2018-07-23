@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 
-public class Transaction {
+public class Transaction implements Serializable {
 
     private int ID;
     private String sender;
@@ -22,11 +23,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-            "ID=" + ID +
-            ", sender='" + sender + '\'' +
-            ", receiver='" + receiver + '\'' +
-            ", amount=" + amount +
-            '}';
+        return ID + " " + sender + " " + receiver + " " + amount;
     }
 }

@@ -6,12 +6,15 @@ import java.net.Socket;
 public class NodeClientThread extends Thread {
 
     private int CLIENT_REQUEST_TIMEOUT = 15 * 60 * 1000;
+    private Node node;
     private Socket sock = null;
     private BufferedReader socketReader = null;
     private BufferedWriter socketWriter = null;
 
 
-    NodeClientThread(Socket sock) throws IOException {
+
+    NodeClientThread(Node node, Socket sock) throws IOException {
+        this.node = node;
         this.sock = sock;
         sock.setSoTimeout(CLIENT_REQUEST_TIMEOUT);
         socketReader = new BufferedReader(new InputStreamReader(sock.getInputStream()));

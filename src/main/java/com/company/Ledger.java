@@ -27,10 +27,10 @@ public class Ledger implements Serializable {
     }
 
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Transaction trans : transactions) {
-            result.append(trans.toString()).append("\n");
+        String res = "";
+        for(Transaction trans: transactions) {
+            res += " " + trans.toString();
         }
-        return result.toString();
+        return res;
     }
 }
