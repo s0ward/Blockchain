@@ -17,7 +17,7 @@ public class Node {
         this.inetaddr = getIp();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         NodeServerThread nodeServerThread = new NodeServerThread();
         nodeServerThread.start();
