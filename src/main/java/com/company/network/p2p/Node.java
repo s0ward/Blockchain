@@ -11,13 +11,30 @@ public class Node {
     private static final int LISTENING_PORT = 9001;
     private static final int MAX_NEIGHBORS = 3;
     private String inetaddr;
-    private ArrayList<String> neighbors = new ArrayList<>(MAX_NEIGHBORS);
+    private ArrayList<String> peers = new ArrayList<>(MAX_NEIGHBORS);
+    private int count = 0;
 
-    public Node() {
+    public Node() throws IOException {
         this.inetaddr = getIp();
+        this.startServer();
     }
 
-    public static void main(String[] args) throws IOException {
+
+    public void addPeer(String peer){
+        if(peers.size() < MAX_NEIGHBORS){
+            peers.add(peer);
+        }
+        else{
+            peers.set(count, peer);
+            count = (count+1)%MAX_NEIGHBORS;
+        }
+    }
+
+    public String getInetAddr() {
+        return inetaddr;
+    }
+
+    private void startServer() throws IOException {
 
         NodeServerThread nodeServerThread = new NodeServerThread();
         nodeServerThread.start();
@@ -69,13 +86,8 @@ public class Node {
     }
 
     private void sendMessageToAll(String message) {
-        for (String neighbor : neighbors) {
-            sendMessage(neighbor, message);
+        for (String peer : peers) {
+            sendMessage(peer, message);
         }
     }
-
-    public String getInetAddr() {
-        return inetaddr;
-    }
-
 }
