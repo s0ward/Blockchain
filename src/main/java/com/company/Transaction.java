@@ -17,6 +17,16 @@ public class Transaction {
     }
 
     public String hash() throws NoSuchAlgorithmException {
-        return Hasher.hash(this. toString());
+        return Hasher.hash(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+            "ID=" + ID +
+            ", sender='" + sender + '\'' +
+            ", receiver='" + receiver + '\'' +
+            ", amount=" + amount +
+            '}';
     }
 }
