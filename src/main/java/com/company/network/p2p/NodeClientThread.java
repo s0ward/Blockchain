@@ -6,28 +6,23 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
 
 public class NodeClientThread extends Thread{
 
     private Node node;
-    BlockingQueue<String> messages;
 
-    public NodeClientThread(Node node, BlockingQueue<String> messages) {
+    public NodeClientThread(Node node) {
         this.node = node;
-        this.messages = messages;
     }
-
-
-
 
     @Override
     public void run() {
-
+        System.out.println("ClientThread is running...");
         while(true){
 
-            while(!messages.isEmpty()){
-                processMessage(messages.remove());
+            while(!node.messagesIsEmpty()){
+                System.out.println("Yo, a new message!");
+                processMessage(node.getMessage());
             }
         }
     }
@@ -51,7 +46,6 @@ public class NodeClientThread extends Thread{
                 break;
         }
     }
-
 
     public void sendMessage(String host, String message) {
 
@@ -111,7 +105,4 @@ public class NodeClientThread extends Thread{
         broadcastMessage("IP: "+ip);
     }
 
-    private void addMessage(String message){
-        messages.add(message);
-    }
 }

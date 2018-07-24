@@ -3,22 +3,19 @@ package com.company.network.p2p;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
 
 public class NodeServerThread extends Thread {
 
     private static final int LISTENING_PORT = 9001;
     private Node node;
-    private BlockingQueue<String> messages;
 
-    public NodeServerThread(Node node, BlockingQueue<String> messages) {
+    public NodeServerThread(Node node) {
         this.node = node;
-        this.messages = messages;
     }
 
     @Override
     public void run() {
-
+        System.out.println("ServerThread is running...");
 //        System.out.println(new Date().toString() + " : " +
 //            "Accepted client : " + sock.getInetAddress() +
 //            ":" + sock.getPort());
@@ -29,7 +26,7 @@ public class NodeServerThread extends Thread {
 
             while (!isInterrupted()) {
                 Socket socket = serverSocket.accept();
-                NodeServerClientThread nodeServerClientThread = new NodeServerClientThread(node, messages, socket);
+                NodeServerClientThread nodeServerClientThread = new NodeServerClientThread(node, socket);
                 nodeServerClientThread.start();
             }
         } catch (IOException e) {

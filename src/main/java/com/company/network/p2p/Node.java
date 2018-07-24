@@ -35,6 +35,10 @@ public class Node {
         return messages.remove();
     }
 
+    public boolean messagesIsEmpty(){
+        return messages.isEmpty();
+    }
+
     public String getInetAddr() {
         return this.inetaddr;
     }
@@ -97,13 +101,13 @@ public class Node {
 
     private void startServer() {
 
-        NodeServerThread nodeServerThread = new NodeServerThread(this, messages);
+        NodeServerThread nodeServerThread = new NodeServerThread(this);
         nodeServerThread.start();
 
     }
 
     private void startClient() {
-        NodeClientThread nodeClientThread = new NodeClientThread(this, messages);
+        NodeClientThread nodeClientThread = new NodeClientThread(this);
         nodeClientThread.start();
     }
 
