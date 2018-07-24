@@ -14,7 +14,7 @@ public class Node {
     private ArrayList<String> peers = new ArrayList<>(MAX_NEIGHBORS);
     private int count = 0;
 
-    public Node() throws IOException {
+    public Node() {
         this.inetaddr = getIp();
         this.startServer();
     }
@@ -34,7 +34,7 @@ public class Node {
         return inetaddr;
     }
 
-    private void startServer() throws IOException {
+    private void startServer() {
 
         NodeServerThread nodeServerThread = new NodeServerThread();
         nodeServerThread.start();
