@@ -3,14 +3,17 @@ package com.company.network.p2p;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
 
 public class NodeServerThread extends Thread {
 
     private static final int LISTENING_PORT = 9001;
     private Node node;
+    private BlockingQueue<String> messages;
 
-    public NodeServerThread(Node node) {
+    public NodeServerThread(Node node, BlockingQueue<String> messages) {
         this.node = node;
+        this.messages = messages;
     }
 
     @Override
@@ -26,8 +29,8 @@ public class NodeServerThread extends Thread {
 
             while (!isInterrupted()) {
                 Socket socket = serverSocket.accept();
-                NodeClientThread nodeClientThread = new NodeClientThread(node, socket);
-                nodeClientThread.start();
+                NodeServerClientThread nodeServerClientThread = new NodeServerClientThread(node, messages, socket);
+                nodeServerClientThread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

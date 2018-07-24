@@ -1,28 +1,50 @@
 package com.company.network.p2p;
 
-import com.company.Transaction;
-
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Node {
 
     private static final int LISTENING_PORT = 9001;
     private static final int MAX_NEIGHBORS = 3;
     private NodeDatabase nodeDatabase;
+    private BlockingQueue<String> messages;
     private String inetaddr;
-    private ArrayList<String> peers = new ArrayList<>(MAX_NEIGHBORS);
+    private Vector<String> peers = new Vector<>(MAX_NEIGHBORS);
     private int count = 0;
 
     public Node(){
 
         this.nodeDatabase = new NodeDatabase("Blockchain.txt");
+        this.messages = new LinkedBlockingQueue<String>();
         this.inetaddr = getIp();
+        this.startClient();
         this.startServer();
 
+    }
+
+    public void pushMessage(String message){
+        messages.add(message);
+    }
+
+    public String getMessage(){
+        return messages.remove();
+    }
+
+    public String getInetAddr() {
+        return this.inetaddr;
+    }
+
+    public int getListeningPort(){
+        return LISTENING_PORT;
+    }
+
+    public Vector<String> getPeers() {
+        return this.peers;
     }
 
     public void addPeer(String peer) {
@@ -41,37 +63,6 @@ public class Node {
 
     public void removePeer(String peer) {
         peers.remove(peer);
-    }
-
-    public String getInetAddr() {
-        return inetaddr;
-    }
-
-    public void broadcastMessage(String message) {
-
-        for (String peer : peers) {
-            sendMessage(peer, message);
-        }
-
-    }
-
-    public void broadcastOwnIp(){
-        broadcastMessage("IP: "+this.inetaddr);
-    }
-
-    public void broadcastTransaction(Transaction transaction){
-        broadcastMessage("TRANSACTION: "+transaction.toString());
-    }
-
-    public void broadcastHost(String ip){
-        broadcastMessage("IP: "+ip);
-    }
-
-    private void startServer() {
-
-        NodeServerThread nodeServerThread = new NodeServerThread(this);
-        nodeServerThread.start();
-
     }
 
     private String getIp() {
@@ -104,22 +95,16 @@ public class Node {
         return ip;
     }
 
-    private void sendMessage(String host, String message) {
+    private void startServer() {
 
-        Socket socket = null;
+        NodeServerThread nodeServerThread = new NodeServerThread(this, messages);
+        nodeServerThread.start();
 
-        try {
-            socket = new Socket(host, LISTENING_PORT);
-            BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            socketWriter.write(message);
-            socketWriter.flush();
+    }
 
-            socketWriter.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private void startClient() {
+        NodeClientThread nodeClientThread = new NodeClientThread(this, messages);
+        nodeClientThread.start();
     }
 
 }

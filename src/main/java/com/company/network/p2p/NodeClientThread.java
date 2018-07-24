@@ -1,46 +1,37 @@
 package com.company.network.p2p;
 
-import java.io.*;
+import com.company.Transaction;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
 
-public class NodeClientThread extends Thread {
+public class NodeClientThread extends Thread{
 
-    private int CLIENT_REQUEST_TIMEOUT = 15 * 60 * 1000;
     private Node node;
-    private Socket sock = null;
-    private BufferedReader socketReader = null;
-    private BufferedWriter socketWriter = null;
+    BlockingQueue<String> messages;
 
-    NodeClientThread(Node node, Socket sock) throws IOException {
+    public NodeClientThread(Node node, BlockingQueue<String> messages) {
         this.node = node;
-        this.sock = sock;
-        sock.setSoTimeout(CLIENT_REQUEST_TIMEOUT);
-        socketReader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        socketWriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        this.messages = messages;
     }
+
+
+
 
     @Override
     public void run() {
 
-//        System.out.println(new Date().toString() + " : " +
-//            "Accepted client : " + sock.getInetAddress() +
-//            ":" + sock.getPort());
+        while(true){
 
-
-        try {
-
-            //Nodes are able to communicate following a protocol
-            //TO DO: Implement a reasonable protocol
-
-            while (!isInterrupted()) {
-                String message = socketReader.readLine();
-                processMessage(message);
-
+            while(!messages.isEmpty()){
+                processMessage(messages.remove());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
+
 
     private void processMessage(String message) {
         String[] splitMessage = message.split("\\s+");
@@ -48,13 +39,12 @@ public class NodeClientThread extends Thread {
 
             case "TRANSACTION":
                 //Save it to your transaction pool
-                //node.broadcastTransaction(new Transaction(Integer.parseInt(splitMessage[1]), splitMessage[2], splitMessage[3], Integer.parseInt(splitMessage[4])));
-                node.broadcastMessage(message);
+                broadcastMessage(message);
                 break;
 
             case "IP":
                 node.addPeer(splitMessage[1]);
-                node.broadcastMessage(message);
+                broadcastMessage(message);
                 break;
 
             default:
@@ -62,5 +52,66 @@ public class NodeClientThread extends Thread {
         }
     }
 
-}
 
+    public void sendMessage(String host, String message) {
+
+        Socket socket = null;
+
+        try {
+            socket = new Socket(host, node.getListeningPort());
+            BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            socketWriter.write(message);
+            socketWriter.flush();
+
+            socketWriter.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void broadcastMessage(String message) {
+
+        for (String peer : node.getPeers()) {
+            sendMessage(peer, message);
+        }
+
+    }
+
+    public void sendPeers(String host){
+        for(String peer: node.getPeers()){
+            sendIP(host, peer);
+        }
+    }
+
+    public void broadcastPeers(){
+        for(String peer: node.getPeers()){
+            broadcastIP(peer);
+        }
+    }
+
+    public void sendOwnIp(String host){
+        sendIP(host, node.getInetAddr());
+    }
+
+    public void broadcastOwnIp(){
+        broadcastIP(node.getInetAddr());
+    }
+
+    public void broadcastTransaction(Transaction transaction){
+        broadcastMessage("TRANSACTION: "+transaction.toString());
+    }
+
+    public void sendIP(String host, String ip){
+        sendMessage(host, "IP: "+ ip);
+    }
+
+    public void broadcastIP(String ip){
+        broadcastMessage("IP: "+ip);
+    }
+
+    private void addMessage(String message){
+        messages.add(message);
+    }
+}
