@@ -1,5 +1,7 @@
 package com.company.network.p2p;
 
+import com.company.Transaction;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.Socket;
@@ -10,17 +12,23 @@ public class Node {
 
     private static final int LISTENING_PORT = 9001;
     private static final int MAX_NEIGHBORS = 3;
+    private NodeDatabase nodeDatabase;
     private String inetaddr;
     private ArrayList<String> peers = new ArrayList<>(MAX_NEIGHBORS);
     private int count = 0;
 
-    public Node() throws IOException {
+    public Node(){
+
+        this.nodeDatabase = new NodeDatabase("Blockchain.txt");
         this.inetaddr = getIp();
         this.startServer();
+
     }
 
+    public void addPeer(String peer) {
 
-    public void addPeer(String peer){
+        if(peers.contains(peer)) return;
+
         if(peers.size() < MAX_NEIGHBORS){
             peers.add(peer);
         }
@@ -28,20 +36,46 @@ public class Node {
             peers.set(count, peer);
             count = (count+1)%MAX_NEIGHBORS;
         }
+
+    }
+
+    public void removePeer(String peer) {
+        peers.remove(peer);
     }
 
     public String getInetAddr() {
         return inetaddr;
     }
 
-    private void startServer() throws IOException {
+    public void broadcastMessage(String message) {
+
+        for (String peer : peers) {
+            sendMessage(peer, message);
+        }
+
+    }
+
+    public void broadcastOwnIp(){
+        broadcastMessage("IP: "+this.inetaddr);
+    }
+
+    public void broadcastTransaction(Transaction transaction){
+        broadcastMessage("TRANSACTION: "+transaction.toString());
+    }
+
+    public void broadcastHost(String ip){
+        broadcastMessage("IP: "+ip);
+    }
+
+    private void startServer() {
 
         NodeServerThread nodeServerThread = new NodeServerThread(this);
         nodeServerThread.start();
 
     }
 
-    private static String getIp() {
+    private String getIp() {
+
         URL ipChecker = null;
         try {
             ipChecker = new URL("http://checkip.amazonaws.com");
@@ -71,7 +105,9 @@ public class Node {
     }
 
     private void sendMessage(String host, String message) {
+
         Socket socket = null;
+
         try {
             socket = new Socket(host, LISTENING_PORT);
             BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -83,11 +119,7 @@ public class Node {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void sendMessageToAll(String message) {
-        for (String peer : peers) {
-            sendMessage(peer, message);
-        }
-    }
 }

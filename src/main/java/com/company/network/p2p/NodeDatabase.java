@@ -8,27 +8,13 @@ import java.io.*;
 import java.util.Date;
 
 public class NodeDatabase {
+
     private String source;
 
 
     public NodeDatabase(String source) {
         this.source = source;
     }
-
-//    public void appendBlock(Block block){
-//
-//        try {
-//            FileOutputStream fileOut =
-//                new FileOutputStream(source);
-//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//            out.writeObject(block);
-//            out.close();
-//            fileOut.close();
-//            System.out.printf("Serialized data is saved in "+source);
-//        } catch (IOException i) {
-//            i.printStackTrace();
-//        }
-//    }
 
     public void appendBlock(Block block) throws IOException {
 
@@ -46,15 +32,13 @@ public class NodeDatabase {
         BlockHeader header = null;
         String prevHash = null;
         String nonce = null;
-        String ledgerHash = null;it 
+        String ledgerHash = null;
         Date timestamp = null;
         String headerHash = null;
         Ledger ledger = null;
 
-
         int count = 0;
-        BufferedReader reader = new BufferedReader(new FileReader("Blockchain.txt"));
-
+        BufferedReader reader = new BufferedReader(new FileReader("src/Blockchain.txt"));
 
         String line = null;
         while ((line = reader.readLine()) != null){
@@ -62,15 +46,9 @@ public class NodeDatabase {
             for(String s: lineSplit)
             {
                 if(Integer.parseInt(lineSplit[0]) == blockID){
-
                     header = new BlockHeader(lineSplit[1],lineSplit[2],lineSplit[3],"hey");
                 }
             }
         }
-
     }
-
-//    public Block getLastBlock(){
-//    }
-
 }

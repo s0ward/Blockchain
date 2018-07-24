@@ -11,8 +11,6 @@ public class NodeClientThread extends Thread {
     private BufferedReader socketReader = null;
     private BufferedWriter socketWriter = null;
 
-
-
     NodeClientThread(Node node, Socket sock) throws IOException {
         this.node = node;
         this.sock = sock;
@@ -36,10 +34,33 @@ public class NodeClientThread extends Thread {
 
             while (!isInterrupted()) {
                 String message = socketReader.readLine();
+                processMessage(message);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private void processMessage(String message) {
+        String[] splitMessage = message.split("\\s+");
+        switch (splitMessage[0]) {
+
+            case "TRANSACTION":
+                //Save it to your transaction pool
+                //node.broadcastTransaction(new Transaction(Integer.parseInt(splitMessage[1]), splitMessage[2], splitMessage[3], Integer.parseInt(splitMessage[4])));
+                node.broadcastMessage(message);
+                break;
+
+            case "IP":
+                node.addPeer(splitMessage[1]);
+                node.broadcastMessage(message);
+                break;
+
+            default:
+                break;
+        }
+    }
+
 }
 

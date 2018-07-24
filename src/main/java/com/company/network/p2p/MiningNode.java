@@ -13,23 +13,23 @@ public class MiningNode extends Node {
     private static ObjectOutputStream oos;
     private TransactionPool transPool;
 
-    public MiningNode() throws IOException {
+    public MiningNode(){
         super();
     }
 
-    private static Block getBlock() throws Exception {
+    private Block getBlock() throws Exception {
         //Returns a new Block formed by taking transactions from the transPool
         Ledger ledger = new Ledger();
         ledger.addTransaction(new Transaction(1, "me", "you", 10));
-        return new Block("prevHashEXAMPLE", "nonceEXAMPLE", new Ledger());
+        return new Block("prevHashEXAMPLE", "nonceEXAMPLE", ledger);
     }
 
-    private static void sendBlock(Block block) throws IOException {
+    private void sendBlock(Block block) throws IOException {
         oos.writeObject(block);
         oos.flush();
     }
 
-    private static void mine() throws Exception {
+    private void mine() throws Exception {
 
         socket = new Socket("localhost", BlockServer.LISTENING_PORT);
         socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -51,4 +51,5 @@ public class MiningNode extends Node {
             sendBlock(currentBlock);
         }
     }
+
 }

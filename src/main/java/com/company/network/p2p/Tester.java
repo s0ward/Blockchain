@@ -6,9 +6,6 @@ import com.company.Transaction;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Tester {
 
