@@ -13,4 +13,10 @@ public class AppTest {
     public void testAppHasAGreeting() {
         assertEquals(4, 2 + 2);
     }
+
+    @Test public void
+    testHashable() {
+        BlockHeader header = new BlockHeader("", "asda", "123");
+        System.out.println(header.hash());
+    }
 }

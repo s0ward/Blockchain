@@ -6,20 +6,26 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
-public class Hasher {
+public final class Hasher {
+
+    private static final String HASHING_ALGORITHM = "SHA-256";
+    private static MessageDigest digest = getMessageDigest();
 
     public static String hash(String originalString) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
         byte[] encodedHash = Objects.requireNonNull(digest).digest(
             originalString.getBytes(StandardCharsets.UTF_8));
 
         return bytesToHex(encodedHash);
+    }
+
+    private static MessageDigest getMessageDigest() {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance(HASHING_ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return digest;
     }
 
     private static String bytesToHex(byte[] hash) {

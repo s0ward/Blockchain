@@ -16,7 +16,7 @@ public class Block implements Serializable {
     public Block(String prevHash, String nonce, Ledger ledger) {
         blockCounter++;
         this.blockNumber = blockCounter;
-        this.header = new BlockHeader(prevHash, nonce, ledger.hash());
+//        this.header = new BlockHeader(prevHash, nonce, ledger.hash());
         this.ledger = ledger;
         System.out.println("Block number: " + this.blockNumber + " is created");
     }
