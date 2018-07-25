@@ -5,7 +5,7 @@ import com.company.client.app.util.Hasher;
 import java.io.Serializable;
 import java.util.Date;
 
-public class BlockHeader implements Serializable {
+public class BlockHeader implements Serializable, Hashable {
 
     private String prevHash;
     private Date timestamp;
@@ -32,9 +32,5 @@ public class BlockHeader implements Serializable {
 
     public void setNonce(String nonce) {
         this.nonce = nonce;
-    }
-
-    private String getHash() {
-        return Hasher.hash(this.toString());
     }
 }

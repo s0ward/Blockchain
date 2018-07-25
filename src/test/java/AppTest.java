@@ -4,6 +4,7 @@
 
 import static org.junit.Assert.assertEquals;
 
+import com.company.client.app.data.BlockHeader;
 import org.junit.Test;
 
 public class AppTest {

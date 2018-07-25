@@ -6,11 +6,15 @@ import java.util.List;
 @Entity
 public class TransactionPool {
 
-    private List<Transaction> transactions;
+    private static TransactionPool instance;
 
-    public TransactionPool() {}
+    private TransactionPool() {}
 
-    public List<Transaction> getTransactions() {
-        return transactions;
+    public static synchronized TransactionPool getInstance() {
+        if (instance == null) {
+            instance = new TransactionPool();
+        }
+
+        return instance;
     }
 }
