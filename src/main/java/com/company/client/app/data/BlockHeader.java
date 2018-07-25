@@ -1,9 +1,8 @@
 package com.company.client.app.data;
 
-import com.company.Hasher;
+import com.company.client.app.util.Hasher;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 public class BlockHeader implements Serializable {
@@ -35,7 +34,7 @@ public class BlockHeader implements Serializable {
         this.nonce = nonce;
     }
 
-    private String getHash() throws NoSuchAlgorithmException {
+    private String getHash() {
         return Hasher.hash(this.toString());
     }
 }

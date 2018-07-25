@@ -1,6 +1,6 @@
 package com.company.client.app.rest;
 
-import com.company.Transaction;
+import com.company.client.app.data.Transaction;
 import com.company.client.app.core.BlockchainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,6 @@ public class TransactionsController {
 
     @PostMapping
     public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction) {
-
+        return ResponseEntity.ok(new Transaction());
     }
 }

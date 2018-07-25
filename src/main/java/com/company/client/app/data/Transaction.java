@@ -13,6 +13,10 @@ public class Transaction {
 
     private static int currentId = 0;
 
+    public Transaction() {
+        this.id = -1;
+    }
+
     public Transaction(String sender, String receiver, int amount) {
         this.id = currentId++;
         this.sender = sender;
