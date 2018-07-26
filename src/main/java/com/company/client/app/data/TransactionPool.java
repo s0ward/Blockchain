@@ -1,12 +1,13 @@
 package com.company.client.app.data;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 public class TransactionPool {
 
     private static TransactionPool instance;
+    private List<Transaction> transactions = new ArrayList<>();
 
     private TransactionPool() {}
 
@@ -16,5 +17,13 @@ public class TransactionPool {
         }
 
         return instance;
+    }
+
+    public void addTransaction(Transaction t) {
+        transactions.add(t);
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }

@@ -1,8 +1,5 @@
 package com.company.client.app.data;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Transaction {
 
     private int id;

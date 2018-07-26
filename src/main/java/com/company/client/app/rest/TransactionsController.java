@@ -16,6 +16,7 @@ public class TransactionsController {
 
     @PostMapping
     public ResponseEntity<Transaction> postTransaction(@RequestBody Transaction transaction) {
-        return ResponseEntity.ok(new Transaction());
+
+        return ResponseEntity.ok(transaction);
     }
 }
