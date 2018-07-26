@@ -1,6 +1,5 @@
 package com.company.client.app.data;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
